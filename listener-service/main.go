@@ -39,6 +39,7 @@ func main() {
     }
 }
 
+// connect to rabbitmq
 func connect() (*ampq.Connection, error) {
 	var counts int64
 	var backoff = 1 * time.Second
@@ -50,6 +51,7 @@ func connect() (*ampq.Connection, error) {
 		if err!= nil {
             fmt.Println("RabbitMQ not yest ready...")
 			counts++
+			
         } else {
 			connection = c
 			break

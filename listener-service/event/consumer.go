@@ -20,16 +20,17 @@ func NewConsumer(conn *ampq.Connection) (Consumer, error) {
 		conn: conn,
 	}
 
+	// setup consumer
 	err := consumer.setup()
 	if err != nil {
 		return Consumer{}, err
 	}
 
 	return consumer, nil
-	
 }
 
 func (consumer *Consumer) setup() error {
+	// Open channel
 	channel, err := consumer.conn.Channel()
 	if err!= nil {
         return err
@@ -38,12 +39,15 @@ func (consumer *Consumer) setup() error {
 	return declareExchange(channel)
 }
 
+
+// entity Payload
 type Payload struct {
 	Name string `json:"name"`
 	Data string `json:"data"`
 }
 
 func (consumer *Consumer) Listen(topics []string) error {
+	// open session in channel
 	ch, err := consumer.conn.Channel()
 	if err != nil {
 		return err
@@ -51,11 +55,13 @@ func (consumer *Consumer) Listen(topics []string) error {
 
 	defer ch.Close()
 
+	// declare random queue
 	q, err := declareRandomQueue(ch)
 	if err!= nil {
         return err
     }
 
+	// check queue binding
 	for _, s := range topics {
 		ch.QueueBind(
 			q.Name,
@@ -70,6 +76,7 @@ func (consumer *Consumer) Listen(topics []string) error {
 		}
 	}
 
+	// get message from consume
 	messages, err := ch.Consume(q.Name, "", true, false, false, false, nil)
 	if err != nil {
 		return err

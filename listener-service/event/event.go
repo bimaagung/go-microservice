@@ -7,7 +7,7 @@ import (
 func declareExchange(ch *ampq.Channel) error {
 	return ch.ExchangeDeclare(
 		"logs_topic",	// name
-		"topic", 		// topic
+		"topic", 		// kind
 		true,      		// durable?
         false,     		// auto-deleted?
 		false,     		// internal?
