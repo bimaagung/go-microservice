@@ -46,13 +46,15 @@
     let output = document.getElementById("output");
     let sent = document.getElementById("payload");
     let received = document.getElementById("received");
+    const brokerURL = {{.BrokerURL}};
 
     brokerBtn.addEventListener("click", function(){
         const body = {
             method: 'POST',
         }
 
-        fetch("http:\/\/localhost:8080", body).then((response) => response.json())
+        fetch(`${brokerURL}`, body)
+        .then((response) => response.json())
         .then((data) => {
             sent.innerHTML= "empty post request";
             received.innerHTML = JSON.stringify(data, undefined, 4);
@@ -85,7 +87,8 @@
             headers: headers,
         } 
 
-        fetch("http:\/\/localhost:8080/handle", body).then((response) => response.json())
+        fetch(`${brokerURL}/handle`, body)
+        .then((response) => response.json())
         .then((data) => {
             sent.innerHTML= JSON.stringify(payload, undefined, 4);
             received.innerHTML = JSON.stringify(data, undefined, 4);
@@ -118,7 +121,7 @@
             headers: headers,
         } 
 
-        fetch("http:\/\/localhost:8080/log-grpc", body).then((response) => response.json())
+        fetch(`${brokerURL}/log-grpc`, body).then((response) => response.json())
         .then((data) => {
             sent.innerHTML= JSON.stringify(payload, undefined, 4);
             received.innerHTML = JSON.stringify(data, undefined, 4);
@@ -151,7 +154,7 @@
             headers: headers,
         } 
 
-        fetch("http:\/\/localhost:8080/handle", body).then((response) => response.json())
+        fetch(`${brokerURL}/handle`, body).then((response) => response.json())
         .then((data) => {
             sent.innerHTML= JSON.stringify(payload, undefined, 4);
             received.innerHTML = JSON.stringify(data, undefined, 4);
@@ -186,7 +189,7 @@
             headers: headers,
         } 
 
-        fetch("http:\/\/localhost:8080/handle", body).then((response) => response.json())
+        fetch(`${brokerURL}/handle`, body).then((response) => response.json())
         .then((data) => {
             sent.innerHTML= JSON.stringify(payload, undefined, 4);
             received.innerHTML = JSON.stringify(data, undefined, 4);
